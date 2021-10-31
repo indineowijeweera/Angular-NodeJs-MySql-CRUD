@@ -1,30 +1,26 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const db = require('../util/database');
 
-const CustomerSchema = new Schema({
-    customerName: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    address:{
-        type: String,
-        required: true
-    },
-    city:{
-        type: String,
-        required: true
-    },
-    contactNumber:{
-        type: Number,
-        required: true
+module.exports = class Customer {
+
+    static fetchAll(start, limit) {
+        return db.execute('SELECT * FROM customer ORDER BY created_at DESC LIMIT ?,?', [start, limit]);
     }
-}, { timestamps: true });
 
+    static findCount() {
+        return db.execute('SELECT COUNT(*) FROM customer');
+    }
 
-const Customer = mongoose.model('customer', CustomerSchema);
+    static post(customer) {
+        return db.execute('INSERT INTO customer (customer_name,description,address,city,contact_number,created_at) VALUES (?,?,?,?,?,?)', [customer.customer_name, customer.description, customer.address, customer.city, customer.contact_number, customer.created_at]);
+    }
 
-module.exports = Customer;
+    static update(customerRef, customer) {
+        const columns = Object.keys(customer);
+        let sql = "UPDATE customer SET " + columns.join(" = ? ,") +" = ? WHERE customer_ref = ?";
+        return db.execute(sql, [customer.customer_name, customer.description, customer.address, customer.city, customer.contact_number,customer.updated_at, customerRef]);
+    }
+
+    static delete(customerRef) {
+        return db.execute('DELETE FROM customer WHERE customer_ref = ?', [customerRef]);
+    }
+};

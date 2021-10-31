@@ -1,25 +1,11 @@
 const createError = require('http-errors');
 const express = require('express');
-const mongoose = require('mongoose');
 const morgan = require('morgan')
 const cors = require('cors');
 //read environment variables
 const dotenv = require('dotenv');
 dotenv.config();
 var apiRouter = require('./routes/api');
-
-mongoose.set("useFindAndModify", false)
-mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
-
-mongoose.connection.on("open", function (ref) {
-  console.log("Connected to mongo server.");
-});
-
-mongoose.connection.on("error", function (err) {
-  console.log("Could not connect to mongo server!");
-  console.log(err);
-});
-
 var app = express();
 app.use(cors());
 app.use(express.json());

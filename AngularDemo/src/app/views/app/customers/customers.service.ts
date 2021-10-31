@@ -23,8 +23,8 @@ export class CustomersService {
     return this.http.put(this.globalService.getAPIUrl() + '/customer/update',form, this.globalService.getHttpOptions());
   }
 
-  deleteCustomer(id: any) {
-    return this.http.delete(this.globalService.getAPIUrl() + '/customer?id='+id, this.globalService.getHttpOptions());
+  deleteCustomer(customerRef: any) {
+    return this.http.delete(this.globalService.getAPIUrl() + '/customer?customerRef='+customerRef, this.globalService.getHttpOptions());
   }
 
   getCustomerById(customerId: any) {

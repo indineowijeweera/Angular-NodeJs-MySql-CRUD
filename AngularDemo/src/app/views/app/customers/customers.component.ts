@@ -190,7 +190,7 @@ export class CustomersComponent implements OnInit {
     this.selectedCustomer = [];
   }
 
-  deleteCustomer(key, id) {
+  deleteCustomer(key, customerRef) {
     Swal.fire({
       title: 'Are you sure?',
       text: 'Do you need delete this Customer!',
@@ -202,9 +202,9 @@ export class CustomersComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.spinner.show();
-        this.customerService.deleteCustomer(id).subscribe(response => {
+        this.customerService.deleteCustomer(customerRef).subscribe(response => {
           this.spinner.hide();
-          if (response['status'] === 'success') {
+          if (response['affectedRows'] === 1) {
             this.customers.splice(key, 1);
             this.onSuccess('Customer Deleted.');
             this.getAllCustomers();

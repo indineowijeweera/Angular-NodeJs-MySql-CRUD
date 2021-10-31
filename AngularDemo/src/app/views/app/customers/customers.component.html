@@ -61,18 +61,18 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let customer of customers; let key = index">
-                      <td class="text-left">{{customer.customerName}}</td>
+                      <td class="text-left">{{customer.customer_name}}</td>
                       <td class="text-left">{{customer.description}}</td>
                       <td class="text-left">{{customer.address}}</td>
                       <td class="text-left">{{customer.city}}</td>
-                      <td class="text-left">{{customer.contactNumber}}</td>
-                      <td class="text-left">{{customer.createdAt | date:'MM/dd/yyyy'}}</td>
+                      <td class="text-left">{{customer.contact_number}}</td>
+                      <td class="text-left">{{customer.created_at | date:'MM/dd/yyyy'}}</td>
                       <td>
                         <button type="button" (click)="openEditCustomerModel(customerModal,key)"
                           class="btn btn-primary btn-sm default pull-right mr-2  "> <i
                             class="iconsminds-repair  cursor-pointer "></i>
                         </button>
-                        <button type="button" (click)="deleteCustomer(key,customer._id)"
+                        <button type="button" (click)="deleteCustomer(key,customer.customer_ref)"
                           class="btn btn-primary btn-sm default  mr-2  "> <i
                             class="simple-icon-trash cursor-pointer "></i>
                         </button>
@@ -146,7 +146,7 @@
                 <label class="form-group has-float-label">
                   <div class="input-group input-group-sm">
                     <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                      required name="customerName" [(ngModel)]="selectedCustomer.customerName" #customerName="ngModel">
+                      required name="customerName" [(ngModel)]="selectedCustomer.customer_name" #customerName="ngModel">
                   </div>
                   <span>Customer Name<span class="text-danger">*</span></span>
                   <div class="invalid-tooltip" *ngIf="!customerName.valid && isSubmitted">This field is
@@ -195,7 +195,7 @@
                   <div class="input-group input-group-sm">
                     <input type="number" class="form-control" aria-label="Small"
                       aria-describedby="inputGroup-sizing-sm" required name="contactNumber"
-                      [(ngModel)]="selectedCustomer.contactNumber" #contactNumber="ngModel">
+                      [(ngModel)]="selectedCustomer.contact_number" #contactNumber="ngModel">
                   </div>
                   <span>Contact Number<span class="text-danger">*</span></span>
                   <div class="invalid-tooltip" *ngIf="!contactNumber.valid && isSubmitted">This field is
@@ -204,7 +204,7 @@
                 </label>
               </div>
             </div>
-            <input *ngIf="isEdit" type="hidden" name="id" ngModel="{{selectedCustomer._id }}">
+            <input *ngIf="isEdit" type="hidden" name="customerRef" ngModel="{{selectedCustomer.customer_ref}}">
           </div>
         </form>
       </div>
